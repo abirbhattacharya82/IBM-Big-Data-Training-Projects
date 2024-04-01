@@ -1,0 +1,75 @@
+# Ecommerce Sales of Video Games in Hive
+## Existing MySQL Table
+![image](https://github.com/abirbhattacharya82/IBM-Big-Data-Training-Projects/assets/70687014/18c3a56f-159d-4586-992e-4a9fe8bc18d2)
+## Importing MySQL Table Data into Hive Table
+```
+sqoop import --connect jdbc:mysql://localhost/video_games --username root --password cloudera --table video_games_table --hive-import -m 1
+```
+## Analysis and Creation of External Tables
+###
+```
+SELECT Year_of_Release, (sum(Global_Sales)) as Total_Sales FROM video_games_table group by Year_of_Release order by Year_of_Release;
+create external table ext0(Year_of_Release int, Global_Sales float) row format delimited fields terminated by ',' location '/user/cloudera/VideoGames/ext0.txt';
+insert overwrite table ext0 SELECT Year_of_Release, (sum(Global_Sales)) as Total_Sales FROM video_games_table group by Year_of_Release order by Year_of_Release;
+```
+### 
+```
+SELECT Platform, (sum(NA_Sales)+sum(EU_Sales)+sum(JP_Sales)+sum(Other_Sales)) as Total_Sales FROM video_games_table GROUP BY Platform order by Total_Sales desc limit 10;
+create external table ext1(Platform string, Total_Sales float) row format delimited fields terminated by ',' location '/user/cloudera/VideoGames/ext1.txt';
+insert overwrite table ext1 SELECT Platform, (sum(NA_Sales)+sum(EU_Sales)+sum(JP_Sales)+sum(Other_Sales)) as Total_Sales FROM video_games_table GROUP BY Platform order by Total_Sales desc limit 10;
+```
+### 
+```
+SELECT Publisher, (sum(NA_Sales)+sum(EU_Sales)+sum(JP_Sales)+sum(Other_Sales)) as Total_Sales FROM video_games_table GROUP BY Publisher order by Total_Sales desc limit 10;
+create external table ext2(Publisher string, Total_Sales float) row format delimited fields terminated by ',' location '/user/cloudera/VideoGames/ext2.txt';
+insert overwrite table ext2 SELECT Publisher, (sum(NA_Sales)+sum(EU_Sales)+sum(JP_Sales)+sum(Other_Sales)) as Total_Sales FROM video_games_table GROUP BY Publisher order by Total_Sales desc limit 10;
+```
+###
+```
+SELECT Genre, (sum(NA_Sales)+sum(EU_Sales)+sum(JP_Sales)+sum(Other_Sales)) as Total_Sales FROM video_games_table GROUP BY Genre order by Total_Sales desc limit 10;
+create external table ext3(Genre string, Total_Sales float) row format delimited fields terminated by ',' location '/user/cloudera/VideoGames/ext3.txt';
+insert overwrite table ext1 SELECT Genre, (sum(NA_Sales)+sum(EU_Sales)+sum(JP_Sales)+sum(Other_Sales)) as Total_Sales FROM video_games_table GROUP BY Genre order by Total_Sales desc limit 10;
+```
+###
+```
+select sum(NA_Sales) as Total_USA_Sales,sum(Global_Sales) as Total_Global_Sales from video_games_table where Year_of_Release>=2000 AND Year_of_Release<=2006;
+create external table ext4 (USA_Sales float, Global_Sales float) row format delimited fields terminated by ',' location '/user/cloudera/VideoGames/ext4.txt';
+insert overwrite table ext4 select sum(NA_Sales) as Total_USA_Sales,sum(Global_Sales) as Total_Global_Sales from video_games_table where Year_of_Release>=2000 AND Year_of_Release<=2006;
+```
+###
+```
+select Genre,sum(NA_Sales) as USA_Sales from video_games_table group by Genre order by USA_Sales desc limit 3;
+create external table ext5(Genre string, USA_Sales float) row format delimited fields terminated by ',' location '/user/cloudera/VideoGames/ext5.txt';
+insert overwrite table ext5 select Genre,sum(NA_Sales) as USA_Sales from video_games_table group by Genre order by USA_Sales desc limit 3;
+```
+###
+```
+select Publisher,sum(JP_Sales) as Japan_Sales from  video_games_table group by Publisher order by Japan_Sales desc limit 1;
+create external table ext6(Publisher string, JP_Sales float) row format delimited fields terminated by ',' location '/user/cloudera/VideoGames/ext6.txt';
+insert overwrite table ext6 select Publisher,sum(JP_Sales) as Japan_Sales from  video_games_table group by Publisher order by Japan_Sales desc limit 1;
+```
+### External Files in the form of part files
+![image](https://github.com/abirbhattacharya82/IBM-Big-Data-Training-Projects/assets/70687014/4786ff26-4a2b-4343-a776-3d9d679c4665)
+
+## Exporting External Tables to Client Database inside MySQL.
+### Creating Blank External Table
+```
+create table ext0(Year_of_Release int, Global_Sales float);
+create table ext1(Platform varchar(100), Total_Sales float);
+create table ext2(Publisher varchar(100), Total_Sales float);
+create table ext3(Genre varchar(100), Total_Sales float);
+create table ext4(USA_Sales float, Global_Sales float);
+create table ext5(Genre varchar(100), USA_Sales float);
+create table ext6(Publisher varchar(100), JP_Sales float);
+```
+![image (1)](https://github.com/abirbhattacharya82/IBM-Big-Data-Training-Projects/assets/70687014/35912490-6d96-40e3-9911-f61fbbba00cb)
+### Transfering Data from External Table to Client Database
+```
+sqoop export --connect jdbc:mysql://localhost/video_games_output --username root --password cloudera --table ext0 --export-dir '/user/cloudera/VideoGames/ext0.txt/000000_0' --input-fields-terminated-by ','
+sqoop export --connect jdbc:mysql://localhost/video_games_output --username root --password cloudera --table ext1 --export-dir '/user/cloudera/VideoGames/ext1.txt/000000_0' --input-fields-terminated-by ','
+sqoop export --connect jdbc:mysql://localhost/video_games_output --username root --password cloudera --table ext2 --export-dir '/user/cloudera/VideoGames/ext2.txt/000000_0' --input-fields-terminated-by ','
+sqoop export --connect jdbc:mysql://localhost/video_games_output --username root --password cloudera --table ext3 --export-dir '/user/cloudera/VideoGames/ext3.txt/000000_0' --input-fields-terminated-by ','
+sqoop export --connect jdbc:mysql://localhost/video_games_output --username root --password cloudera --table ext4 --export-dir '/user/cloudera/VideoGames/ext4.txt/000000_0' --input-fields-terminated-by ','
+sqoop export --connect jdbc:mysql://localhost/video_games_output --username root --password cloudera --table ext5 --export-dir '/user/cloudera/VideoGames/ext5.txt/000000_0' --input-fields-terminated-by ','
+sqoop export --connect jdbc:mysql://localhost/video_games_output --username root --password cloudera --table ext6 --export-dir '/user/cloudera/VideoGames/ext6.txt/000000_0' --input-fields-terminated-by ','
+```
