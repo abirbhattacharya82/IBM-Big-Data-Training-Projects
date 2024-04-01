@@ -73,3 +73,8 @@ sqoop export --connect jdbc:mysql://localhost/video_games_output --username root
 sqoop export --connect jdbc:mysql://localhost/video_games_output --username root --password cloudera --table ext5 --export-dir '/user/cloudera/VideoGames/ext5.txt/000000_0' --input-fields-terminated-by ','
 sqoop export --connect jdbc:mysql://localhost/video_games_output --username root --password cloudera --table ext6 --export-dir '/user/cloudera/VideoGames/ext6.txt/000000_0' --input-fields-terminated-by ','
 ```
+### Sqoop Jobs for transferring External Tables to Client DB Running
+![image](https://github.com/abirbhattacharya82/IBM-Big-Data-Training-Projects/assets/70687014/6c0a0b13-0bb8-450d-ac71-c61ec5be100f)
+
+### External Tables imported in Client Database
+![image](https://github.com/abirbhattacharya82/IBM-Big-Data-Training-Projects/assets/70687014/3a2008d1-3712-47b6-baed-25d68c2fe185)
