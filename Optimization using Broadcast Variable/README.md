@@ -22,7 +22,7 @@ We have to generate output that contain customer id, customer name along with th
 price, total quantity ordered and total amount paid.
 <br>
 Since customer file is smaller (with 1244 records) and sales transactions file is larger (172198 records) we will put 
-customer details in a variable and broadcast it across the cluster nodes. We will use this broadcast variable to add 
+*customer details in a variable and broadcast it across the cluster nodes*. We will use this broadcast variable to add 
 the customer name based on each customer id to the sales transactions.
 <br>
 Also in the application we need to aggregate the sales transactions of the same product in cases where a 
