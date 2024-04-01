@@ -6,43 +6,43 @@
 sqoop import --connect jdbc:mysql://localhost/video_games --username root --password cloudera --table video_games_table --hive-import -m 1
 ```
 ## Analysis and Creation of External Tables
-###
+### Total Global Sales in a year
 ```
 SELECT Year_of_Release, (sum(Global_Sales)) as Total_Sales FROM video_games_table group by Year_of_Release order by Year_of_Release;
 create external table ext0(Year_of_Release int, Global_Sales float) row format delimited fields terminated by ',' location '/user/cloudera/VideoGames/ext0.txt';
 insert overwrite table ext0 SELECT Year_of_Release, (sum(Global_Sales)) as Total_Sales FROM video_games_table group by Year_of_Release order by Year_of_Release;
 ```
-### 
+### Top 10 Platforms and their Global Sales
 ```
 SELECT Platform, (sum(NA_Sales)+sum(EU_Sales)+sum(JP_Sales)+sum(Other_Sales)) as Total_Sales FROM video_games_table GROUP BY Platform order by Total_Sales desc limit 10;
 create external table ext1(Platform string, Total_Sales float) row format delimited fields terminated by ',' location '/user/cloudera/VideoGames/ext1.txt';
 insert overwrite table ext1 SELECT Platform, (sum(NA_Sales)+sum(EU_Sales)+sum(JP_Sales)+sum(Other_Sales)) as Total_Sales FROM video_games_table GROUP BY Platform order by Total_Sales desc limit 10;
 ```
-### 
+### ### Top 10 Publisher and their Global Sales
 ```
 SELECT Publisher, (sum(NA_Sales)+sum(EU_Sales)+sum(JP_Sales)+sum(Other_Sales)) as Total_Sales FROM video_games_table GROUP BY Publisher order by Total_Sales desc limit 10;
 create external table ext2(Publisher string, Total_Sales float) row format delimited fields terminated by ',' location '/user/cloudera/VideoGames/ext2.txt';
 insert overwrite table ext2 SELECT Publisher, (sum(NA_Sales)+sum(EU_Sales)+sum(JP_Sales)+sum(Other_Sales)) as Total_Sales FROM video_games_table GROUP BY Publisher order by Total_Sales desc limit 10;
 ```
-###
+### Top 10 Genre and their Global Sales
 ```
 SELECT Genre, (sum(NA_Sales)+sum(EU_Sales)+sum(JP_Sales)+sum(Other_Sales)) as Total_Sales FROM video_games_table GROUP BY Genre order by Total_Sales desc limit 10;
 create external table ext3(Genre string, Total_Sales float) row format delimited fields terminated by ',' location '/user/cloudera/VideoGames/ext3.txt';
 insert overwrite table ext1 SELECT Genre, (sum(NA_Sales)+sum(EU_Sales)+sum(JP_Sales)+sum(Other_Sales)) as Total_Sales FROM video_games_table GROUP BY Genre order by Total_Sales desc limit 10;
 ```
-###
+### Comparision of Sales in USA and Global Sales
 ```
 select sum(NA_Sales) as Total_USA_Sales,sum(Global_Sales) as Total_Global_Sales from video_games_table where Year_of_Release>=2000 AND Year_of_Release<=2006;
 create external table ext4 (USA_Sales float, Global_Sales float) row format delimited fields terminated by ',' location '/user/cloudera/VideoGames/ext4.txt';
 insert overwrite table ext4 select sum(NA_Sales) as Total_USA_Sales,sum(Global_Sales) as Total_Global_Sales from video_games_table where Year_of_Release>=2000 AND Year_of_Release<=2006;
 ```
-###
+### Most Popular Genre in USA
 ```
 select Genre,sum(NA_Sales) as USA_Sales from video_games_table group by Genre order by USA_Sales desc limit 3;
 create external table ext5(Genre string, USA_Sales float) row format delimited fields terminated by ',' location '/user/cloudera/VideoGames/ext5.txt';
 insert overwrite table ext5 select Genre,sum(NA_Sales) as USA_Sales from video_games_table group by Genre order by USA_Sales desc limit 3;
 ```
-###
+### Most popular Publisher in Japan
 ```
 select Publisher,sum(JP_Sales) as Japan_Sales from  video_games_table group by Publisher order by Japan_Sales desc limit 1;
 create external table ext6(Publisher string, JP_Sales float) row format delimited fields terminated by ',' location '/user/cloudera/VideoGames/ext6.txt';
