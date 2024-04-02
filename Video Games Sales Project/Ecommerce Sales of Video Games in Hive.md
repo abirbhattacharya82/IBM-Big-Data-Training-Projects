@@ -1,4 +1,7 @@
 # Ecommerce Sales of Video Games in Hive
+## Creating the Client Database
+![image](https://github.com/abirbhattacharya82/IBM-Big-Data-Training-Projects/assets/70687014/6494701f-fe06-4377-a0f3-08e267009bf2)
+
 ## Existing MySQL Table
 ![image](https://github.com/abirbhattacharya82/IBM-Big-Data-Training-Projects/assets/70687014/18c3a56f-159d-4586-992e-4a9fe8bc18d2)
 ## Creating a Hive Table before importing Data from MySQL and we are using Year of Release as Partition
