@@ -1,6 +1,10 @@
 # Ecommerce Sales of Video Games in Hive
 ## Existing MySQL Table
 ![image](https://github.com/abirbhattacharya82/IBM-Big-Data-Training-Projects/assets/70687014/18c3a56f-159d-4586-992e-4a9fe8bc18d2)
+## Creating a Hive Table before importing Data from MySQL and we are using Year of Release as Partition
+```
+create table video_games_table (Name string, Platform string, Genre string, Publisher string, NA_Sales double, EU_Sales double, JP_Sales double, Other_Sales double, Global_Sales double, Critical_Score int, Critic_Count int, User_Score int, User_Count int, Developer string, Rating string) partitioned by (Year_of_Release int) row format delimited fields terminated by ',';
+```
 ## Importing MySQL Table Data into Hive Table
 ```
 sqoop import --connect jdbc:mysql://localhost/video_games --username root --password cloudera --table video_games_table --hive-import -m 1
