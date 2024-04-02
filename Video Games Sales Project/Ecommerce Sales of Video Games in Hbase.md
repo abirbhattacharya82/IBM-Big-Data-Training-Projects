@@ -39,3 +39,4 @@ create table ext1_hbase(Platform varchar(100), Total_Sales float);
 sqoop export --connect jdbc:mysql://localhost/video_games_output --username root --password cloudera --table ext0_hbase --export-dir '/user/cloudera/VideoGames/ext0_hbase.txt/000000_0' --input-fields-terminated-by ','
 sqoop export --connect jdbc:mysql://localhost/video_games_output --username root --password cloudera --table ext1_hbase --export-dir '/user/cloudera/VideoGames/ext1_hbase.txt/000000_0' --input-fields-terminated-by ','
 ```
+![image](https://github.com/abirbhattacharya82/IBM-Big-Data-Training-Projects/assets/70687014/f9939c5c-81c5-4880-bc0b-9e18a01e7edf)
