@@ -1,4 +1,6 @@
 # Ecommerce Sales of Video Games in Pig
+### Creating a CSV from the client Database and Putting it in HDFS
+![image](https://github.com/abirbhattacharya82/IBM-Big-Data-Training-Projects/assets/70687014/d538cfaf-8078-4056-b9e6-18147a364394)
 The file is already there in HDFS <br>
 So we are creating Pig relations to load them.
 ```
