@@ -32,6 +32,8 @@ insert overwrite table ext1_hbase SELECT Platform, (sum(NA_Sales)+sum(EU_Sales)+
 create table ext0_hbase(Year_of_Release int, Global_Sales float);
 create table ext1_hbase(Platform varchar(100), Total_Sales float);
 ```
+![image](https://github.com/abirbhattacharya82/IBM-Big-Data-Training-Projects/assets/70687014/4a3ce4b0-ad8d-4002-a657-eab155f61638)
+
 ### Sqoop Pipeline to Transfer Data from Hive to Client Database
 ```
 sqoop export --connect jdbc:mysql://localhost/video_games_output --username root --password cloudera --table ext0_hbase --export-dir '/user/cloudera/VideoGames/ext0_hbase.txt/000000_0' --input-fields-terminated-by ','
