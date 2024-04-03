@@ -12,6 +12,8 @@ create table video_games_table (Name string, Platform string, Genre string, Publ
 ```
 sqoop import --connect jdbc:mysql://localhost/video_games --username root --password cloudera --table video_games_table --hive-import -m 1
 ```
+![image (10)](https://github.com/abirbhattacharya82/IBM-Big-Data-Training-Projects/assets/70687014/94227b4a-c7ae-4ece-bfb3-70ab0b8882bf)
+
 ## Analysis and Creation of External Tables
 ### Total Global Sales in a year
 ```
