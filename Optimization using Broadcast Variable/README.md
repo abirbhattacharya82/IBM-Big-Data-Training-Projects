@@ -30,6 +30,10 @@ customer ordered as multiple transactions.
 
 # Solution
 Out PySpark application has the following sequence of steps:
+- Putting the MySQL Database to DBFS
+![image (8)](https://github.com/abirbhattacharya82/IBM-Big-Data-Training-Projects/assets/70687014/14c5bfeb-23f2-4e69-9404-c443d18f94a4)
+![image (9)](https://github.com/abirbhattacharya82/IBM-Big-Data-Training-Projects/assets/70687014/5be440c0-b754-4e5e-819d-d20ffe5903e1)
+
 - Read the input file customers.tsv to create the customer RDD. The RDD elements are the lines of type string 
 from the input file
 - We now need to transform the RDD into a pairRDD having a key,value pair as the RDD elements with 
